@@ -5,21 +5,294 @@
 {% block page_title %}Student Dashboard{% endblock %}
 
 {% block content %}
-<h2>Welcome to your Dashboard</h2>
-<p>This is your main student portal. You can navigate using the sidebar.</p>
+<style>
+    /* Dashboard specific styles - simple and clean */
+    .welcome-section {
+        background: linear-gradient(135deg, #3498db, #2c3e50);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
 
-<div class="quick-stats">
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        border-left: 4px solid #3498db;
+    }
+
+    .stat-card h3 {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-card .number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .courses-section, .assignments-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+    }
+
+    .section-header h2 {
+        color: #2c3e50;
+    }
+
+    .view-all {
+        color: #3498db;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .course-card {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 6px;
+        border-left: 3px solid #3498db;
+    }
+
+    .course-card h4 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .course-card p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .assignments-list {
+        list-style: none;
+    }
+
+    .assignment-item {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: between;
+        align-items: center;
+    }
+
+    .assignment-item:last-child {
+        border-bottom: none;
+    }
+
+    .assignment-info h4 {
+        color: #2c3e50;
+        margin-bottom: 0.3rem;
+    }
+
+    .assignment-info p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .due-date {
+        background: #e74c3c;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .completed {
+        background: #27ae60;
+    }
+
+    .upcoming {
+        background: #f39c12;
+    }
+</style>
+
+<div class="welcome-section">
+    <h2>Welcome back, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h2>
+    <p>Here's your academic overview for today</p>
+</div>
+
+<!-- Quick Stats -->
+<div class="stats-grid">
     <div class="stat-card">
-        <h3>Current Subjects</h3>
-        <p>5</p>
+        <h3>Current GPA</h3>
+        <div class="number">3.75</div>
+        <p>Out of 4.0</p>
     </div>
+
+    <div class="stat-card">
+        <h3>Active Courses</h3>
+        <div class="number">5</div>
+        <p>This semester</p>
+    </div>
+
     <div class="stat-card">
         <h3>Pending Assignments</h3>
-        <p>3</p>
+        <div class="number">3</div>
+        <p>To complete</p>
     </div>
+
     <div class="stat-card">
-        <h3>Overall GPA</h3>
-        <p>3.75</p>
+        <h3>Attendance</h3>
+        <div class="number">92%</div>
+        <p>This month</p>
     </div>
 </div>
+
+<!-- Current Courses -->
+<div class="courses-section">
+    <div class="section-header">
+        <h2>My Courses</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+
+    <div class="courses-grid">
+        <div class="course-card">
+            <h4>CS101 - Programming</h4>
+            <p>Dr. Sarah Johnson</p>
+            <p>Mon, Wed, Fri - 10:00 AM</p>
+            <p>Grade: A-</p>
+        </div>
+
+        <div class="course-card">
+            <h4>MATH202 - Calculus</h4>
+            <p>Prof. Michael Chen</p>
+            <p>Tue, Thu - 2:00 PM</p>
+            <p>Grade: B+</p>
+        </div>
+
+        <div class="course-card">
+            <h4>ENG150 - Literature</h4>
+            <p>Dr. Emily Roberts</p>
+            <p>Mon, Wed - 1:00 PM</p>
+            <p>Grade: A</p>
+        </div>
+
+        <div class="course-card">
+            <h4>PHY101 - Physics</h4>
+            <p>Prof. David Wilson</p>
+            <p>Tue, Thu - 11:00 AM</p>
+            <p>Grade: B+</p>
+        </div>
+    </div>
+</div>
+
+<!-- Upcoming Assignments -->
+<div class="assignments-section">
+    <div class="section-header">
+        <h2>Upcoming Assignments</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+
+    <ul class="assignments-list">
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Programming Project - Phase 2</h4>
+                <p>CS101 - Due in 2 days</p>
+            </div>
+            <span class="due-date upcoming">Due Soon</span>
+        </li>
+
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Calculus Problem Set 5</h4>
+                <p>MATH202 - Due in 5 days</p>
+            </div>
+            <span class="due-date">5 days left</span>
+        </li>
+
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Literature Essay Draft</h4>
+                <p>ENG150 - Due in 1 week</p>
+            </div>
+            <span class="due-date">7 days left</span>
+        </li>
+
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Physics Lab Report</h4>
+                <p>PHY101 - Completed</p>
+            </div>
+            <span class="due-date completed">Done</span>
+        </li>
+    </ul>
+</div>
+
+<!-- Recent Activity -->
+<div class="courses-section">
+    <div class="section-header">
+        <h2>Recent Activity</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+
+    <ul class="assignments-list">
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Grade posted for Math Quiz 3</h4>
+                <p>MATH202 - You scored 88% - 2 hours ago</p>
+            </div>
+        </li>
+
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>New announcement in Programming</h4>
+                <p>CS101 - Project deadline extended - Yesterday</p>
+            </div>
+        </li>
+
+        <li class="assignment-item">
+            <div class="assignment-info">
+                <h4>Assignment submitted</h4>
+                <p>PHY101 - Lab report submitted - 2 days ago</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Simple dashboard interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        // You can add simple JavaScript here if needed
+        console.log('Dashboard loaded');
+
+        // Example: Add click handlers for cards
+        const courseCards = document.querySelectorAll('.course-card');
+        courseCards.forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Course details would show here');
+            });
+        });
+    });
+</script>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -25,6 +25,9 @@ def student_login(request):
 
     return render(request, 'login/login.html')
 
+def create_logout(request):
+    logout(request)
+    return redirect('login')
 
 def student_register(request):
     if request.method == 'POST':
